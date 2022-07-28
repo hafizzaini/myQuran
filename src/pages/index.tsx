@@ -1,10 +1,9 @@
-import { Button } from '@mantine/core';
-import type { NextPage } from 'next';
-import { withSessionSsr } from '../../lib/session';
-import { Layout } from '../components/Layout/Layout';
-import { NotFound } from '../components/StaticPage/NotFound';
-import { fullLayout } from '../store/pageConfigSlice';
-import { wrapper } from '../store/store';
+import { Button } from "@mantine/core";
+import { withSessionSsr } from "../../lib/session";
+import { Layout } from "../components/Layout/Layout";
+import { NotFound } from "../components/StaticPage/NotFound";
+import { fullLayout } from "../store/pageConfigSlice";
+import { wrapper } from "../store/store";
 
 const IndexPage = ({ session }) => {
   return (
