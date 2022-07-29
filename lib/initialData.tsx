@@ -1,4 +1,6 @@
-const initialData = {
+import { ImportedDataState } from "@excalidraw/excalidraw/types/data/types";
+
+const initialData: ImportedDataState = {
   elements: [
     {
       type: "rectangle",
@@ -21,7 +23,7 @@ const initialData = {
       seed: 1968410350,
       groupIds: [],
       strokeSharpness: "round",
-      boundElements: null,
+      boundElementIds: null,
     },
     {
       id: "-xMIs_0jIFqvpx-R9UnaG",
