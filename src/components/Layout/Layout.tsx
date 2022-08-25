@@ -10,19 +10,19 @@ import {
   ActionIcon,
   useMantineColorScheme,
   Box,
-} from '@mantine/core';
-import Sidebar from '../Sidebar';
-import useStyles from './Layout.styles';
-import cvsLogo from '../../static/images/cvsLogo.png';
-import Image from 'next/image';
-import { SunIcon, MoonIcon } from '@modulz/radix-icons';
+} from "@mantine/core";
+import Sidebar from "../Sidebar";
+import useStyles from "./Layout.styles";
+import cvsLogo from "../../static/images/cvsLogo.png";
+import Image from "next/image";
+// import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 
-import { useAppSelector } from '../../utils/hooks';
-import { selectShowNavbar } from '../../store/pageConfigSlice';
-import { useState } from 'react';
+import { useAppSelector } from "../../utils/hooks";
+import { selectShowNavbar } from "../../store/pageConfigSlice";
+import { useState } from "react";
 
 export interface LayoutConfig {
-  showNavbar: 'full' | 'top' | 'side' | 'none';
+  showNavbar: "full" | "top" | "side" | "none";
   isDarkMode: boolean;
 }
 
@@ -34,10 +34,10 @@ export const Layout = ({ children }) => {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
   const avatarInitials = () => {
-    const split = ''.split(' ');
+    const split = "".split(" ");
 
     if (split.length !== 0) {
-      let text = '';
+      let text = "";
 
       split.forEach((item) => {
         text += item.charAt(0);
@@ -47,7 +47,7 @@ export const Layout = ({ children }) => {
     }
   };
 
-  if (showNavbarSelector === 'none') {
+  if (showNavbarSelector === "none") {
     return <>{children}</>;
   }
 
@@ -65,30 +65,37 @@ export const Layout = ({ children }) => {
                 v0.0.0
               </Code>
             </Center>
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: "flex" }}>
               <ActionIcon
                 onClick={() => toggleColorScheme()}
                 radius="sm"
                 size={35}
                 sx={(theme) => ({
-                  marginRight: '6px',
+                  marginRight: "6px",
                   backgroundColor:
-                    theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+                    theme.colorScheme === "dark"
+                      ? theme.colors.dark[6]
+                      : theme.colors.gray[0],
                   color:
-                    theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.blue[6],
+                    theme.colorScheme === "dark"
+                      ? theme.colors.yellow[4]
+                      : theme.colors.blue[6],
                 })}
               >
-                {colorScheme === 'dark' ? (
+                {/* {colorScheme === 'dark' ? (
                   <SunIcon width={20} height={20} />
                 ) : (
                   <MoonIcon width={20} height={20} />
-                )}
+                )} */}
               </ActionIcon>
 
-              <Menu onClose={() => setUserMenuOpened(false)} onOpen={() => setUserMenuOpened(true)}>
+              <Menu
+                onClose={() => setUserMenuOpened(false)}
+                onOpen={() => setUserMenuOpened(true)}
+              >
                 <Menu.Target>
                   <UnstyledButton>
-                    <Avatar size={35} radius={'sm'} color="primary">
+                    <Avatar size={35} radius={"sm"} color="primary">
                       {avatarInitials()}
                     </Avatar>
                   </UnstyledButton>
@@ -105,7 +112,9 @@ export const Layout = ({ children }) => {
       styles={(theme) => ({
         main: {
           backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+            theme.colorScheme === "dark"
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
         },
       })}
     >
