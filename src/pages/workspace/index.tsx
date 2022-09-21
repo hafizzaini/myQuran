@@ -2,14 +2,18 @@ import {
   Box,
   Paper,
   Text,
-  Menu,
+  Drawer,
   SegmentedControl,
   Popover,
+  Button,
 } from '@mantine/core';
 import axios from 'axios';
 import { clientApi } from 'lib/api';
+import clientPromise from 'lib/mongodb';
 import { useEffect, useRef, useState } from 'react';
+import verse, { getVerseAsync, selectVerses, testVerse } from 'src/store/verse';
 import { getV1OrV2FontFaceSource } from 'src/utils/fontFaceHelper';
+import { useAppDispatch, useAppSelector } from 'src/utils/hooks';
 // import Workspace from "./Workspace";
 
 interface FontSelection {
@@ -19,6 +23,9 @@ interface FontSelection {
 type FontType = 'qpc' | 'v1' | 'v2';
 
 const Index = () => {
+  const dispatch = useAppDispatch();
+  const verseSelector = useAppSelector(selectVerses);
+
   const currentlyFetchingFonts = useRef([]);
   const [data, setData] = useState([]);
   const [fontType, setFontType] = useState<FontType>('qpc');
@@ -53,11 +60,23 @@ const Index = () => {
     // const fontFace = new FontFace()
   }, [fontType]);
 
+  // const handleSubmit = async () => {
+  //   try {
+  //     await clientPromise.then(async (res) => {
+  //       const doc = { name: 'Neapolitan pizza', shape: 'round' };
+  //       const a = await res.db('test').collection('pets').insertOne(doc);
+  //       console.log('result', a);
+  //     });
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
+
   const fetchByFontType = async () => {
     let res = null;
 
     if (fontType == 'qpc') {
-      res = await clientApi.get('/getVerse');
+      dispatch(getVerseAsync());
     }
 
     if (fontType == 'v1') {
@@ -72,10 +91,10 @@ const Index = () => {
       );
     }
 
-    console.log('res', res.data);
-    if (res.data) {
-      setData(res.data.verses);
-    }
+    // console.log('res', res.data);
+    // if (res.data) {
+    //   setData(res.data.verses);
+    // }
   };
 
   const renderVerse = (verse) => {
@@ -118,8 +137,18 @@ const Index = () => {
     );
   };
 
+  if (!verseSelector) return <div />;
+
   return (
     <div>
+      <Button
+        onClick={() => {
+          console.log('111');
+          // dispatch(testVerse());
+        }}
+      >
+        Test
+      </Button>
       <SegmentedControl
         value={fontType}
         data={[
@@ -129,7 +158,7 @@ const Index = () => {
         ]}
         onChange={(selected: FontType) => setFontType(selected)}
       />
-      {data.map((verse) => {
+      {verseSelector.map((verse) => {
         return (
           <Paper shadow="xs" p="md" mb="md" key={verse.id}>
             <div

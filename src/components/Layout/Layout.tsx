@@ -11,12 +11,15 @@ import {
   useMantineColorScheme,
   Box,
   SegmentedControl,
+  Burger,
+  Drawer,
+  Transition,
 } from '@mantine/core';
 import Sidebar from '../Sidebar';
 import useStyles from './Layout.styles';
 import cvsLogo from '../../static/images/cvsLogo.png';
 import Image from 'next/image';
-// import { SunIcon, MoonIcon } from '@modulz/radix-icons';
+import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 
 import { useAppSelector } from '../../utils/hooks';
 import { selectShowNavbar } from '../../store/pageConfigSlice';
@@ -31,8 +34,10 @@ export const Layout = ({ children }) => {
   const showNavbarSelector = useAppSelector(selectShowNavbar);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { classes } = useStyles();
+  const [openedBurger, setOpenedBurger] = useState(false);
 
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const [sidebarOpened, setSidebarOpened] = useState(true);
 
   const avatarInitials = () => {
     const split = ''.split(' ');
@@ -55,17 +60,27 @@ export const Layout = ({ children }) => {
   return (
     <AppShell
       fixed
-      navbar={<Sidebar />}
+      navbar={
+        <Transition
+          mounted={sidebarOpened}
+          transition="slide-right"
+          timingFunction="ease"
+        >
+          {(styles) => (
+            <div style={styles}>
+              <Sidebar />
+            </div>
+          )}
+        </Transition>
+      }
       navbarOffsetBreakpoint="sm"
       header={
         <Header height={60} p="xs">
           <Group className={classes.header} position="apart" mx="lg">
-            <Center>
-              <Image src={cvsLogo} alt="Cormeum Logo" height="36" width="80" />
-              <Code sx={{ fontWeight: 700 }} ml="sm">
-                v0.0.0
-              </Code>
-            </Center>
+            <Burger
+              opened={sidebarOpened}
+              onClick={() => setSidebarOpened((o) => !o)}
+            />
             <Box sx={{ display: 'flex' }}>
               <ActionIcon
                 onClick={() => toggleColorScheme()}
@@ -83,11 +98,11 @@ export const Layout = ({ children }) => {
                       : theme.colors.blue[6],
                 })}
               >
-                {/* {colorScheme === 'dark' ? (
+                {colorScheme === 'dark' ? (
                   <SunIcon width={20} height={20} />
                 ) : (
                   <MoonIcon width={20} height={20} />
-                )} */}
+                )}
               </ActionIcon>
 
               <Menu
@@ -119,7 +134,17 @@ export const Layout = ({ children }) => {
         },
       })}
     >
-      {children}
+      <>
+        <Drawer
+          opened={openedBurger}
+          onClose={() => setOpenedBurger(false)}
+          title="Stuffs"
+          padding="md"
+        >
+          List of stuffs
+        </Drawer>
+        <div>{children}</div>
+      </>
     </AppShell>
   );
 };
