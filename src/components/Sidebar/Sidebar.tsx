@@ -51,7 +51,6 @@ export const Sidebar = () => {
       for (const [key, value] of Object.entries(data)) {
         chapters.push(value);
       }
-      console.log(chapters);
       setSidebarData(chapters);
     })();
   }, []);

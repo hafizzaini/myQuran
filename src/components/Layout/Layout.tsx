@@ -14,16 +14,37 @@ import {
   Burger,
   Drawer,
   Transition,
+  Anchor,
+  Text,
+  Grid,
+  Button,
 } from '@mantine/core';
 import Sidebar from '../Sidebar';
 import useStyles from './Layout.styles';
-import cvsLogo from '../../static/images/cvsLogo.png';
-import Image from 'next/image';
-import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 
 import { useAppSelector } from '../../utils/hooks';
 import { selectShowNavbar } from '../../store/pageConfigSlice';
 import { useState } from 'react';
+import Link from 'next/link';
+
+// The following import prevents a Font Awesome icon server-side rendering bug,
+// where the icons flash from a very large icon down to a properly sized one:
+import '@fortawesome/fontawesome-svg-core/styles.css';
+// Prevent fontawesome from adding its CSS since we did it manually above:
+import { config } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faBookAtlas,
+  faBookBible,
+  faBookQuran,
+  faCircleInfo,
+  faMoon,
+  faPaperPlane,
+  faPenRuler,
+  faSun,
+} from '@fortawesome/free-solid-svg-icons';
+
+config.autoAddCss = false; /* eslint-disable import/first */
 
 export interface LayoutConfig {
   showNavbar: 'full' | 'top' | 'side' | 'none';
@@ -76,53 +97,97 @@ export const Layout = ({ children }) => {
       navbarOffsetBreakpoint="sm"
       header={
         <Header height={60} p="xs">
-          <Group className={classes.header} position="apart" mx="lg">
-            <Burger
-              opened={sidebarOpened}
-              onClick={() => setSidebarOpened((o) => !o)}
-            />
-            <Box sx={{ display: 'flex' }}>
-              <ActionIcon
-                onClick={() => toggleColorScheme()}
-                radius="sm"
-                size={35}
-                sx={(theme) => ({
-                  marginRight: '6px',
-                  backgroundColor:
-                    theme.colorScheme === 'dark'
-                      ? theme.colors.dark[6]
-                      : theme.colors.gray[0],
-                  color:
-                    theme.colorScheme === 'dark'
-                      ? theme.colors.yellow[4]
-                      : theme.colors.blue[6],
-                })}
-              >
-                {colorScheme === 'dark' ? (
-                  <SunIcon width={20} height={20} />
-                ) : (
-                  <MoonIcon width={20} height={20} />
-                )}
-              </ActionIcon>
+          <Grid className={classes.header}>
+            <Grid.Col span={10}>
+              <Box sx={{ display: 'flex' }}>
+                <Burger
+                  opened={sidebarOpened}
+                  onClick={() => setSidebarOpened((o) => !o)}
+                />
+                <Group spacing={50} ml={100}>
+                  <Link href="1">
+                    <Button
+                      leftIcon={<FontAwesomeIcon icon={faBookQuran} />}
+                      variant="subtle"
+                      color="gray"
+                    >
+                      Quran
+                    </Button>
+                  </Link>
+                  <Link href="/workspace">
+                    <Button
+                      leftIcon={<FontAwesomeIcon icon={faPenRuler} />}
+                      variant="subtle"
+                      color="gray"
+                    >
+                      Canvas
+                    </Button>
+                  </Link>
+                  <Link href="/feedback">
+                    <Button
+                      leftIcon={<FontAwesomeIcon icon={faPaperPlane} />}
+                      variant="subtle"
+                      color="gray"
+                    >
+                      Feedback
+                    </Button>
+                  </Link>
+                  <Link href="/help">
+                    <Button
+                      leftIcon={<FontAwesomeIcon icon={faCircleInfo} />}
+                      variant="subtle"
+                      color="gray"
+                    >
+                      Help
+                    </Button>
+                  </Link>
+                </Group>
+              </Box>
+            </Grid.Col>
+            <Grid.Col span={2} sx={{ display: 'flex', justifyContent: 'end' }}>
+              <Box sx={{ display: 'flex' }}>
+                <ActionIcon
+                  onClick={() => toggleColorScheme()}
+                  radius="sm"
+                  size={35}
+                  sx={(theme) => ({
+                    marginRight: '6px',
+                    backgroundColor:
+                      theme.colorScheme === 'dark'
+                        ? theme.colors.dark[6]
+                        : theme.colors.gray[0],
+                    color:
+                      theme.colorScheme === 'dark'
+                        ? theme.colors.yellow[4]
+                        : theme.colors.blue[6],
+                  })}
+                >
+                  {colorScheme === 'dark' ? (
+                    <FontAwesomeIcon icon={faSun} />
+                  ) : (
+                    <FontAwesomeIcon icon={faMoon} />
+                  )}
+                </ActionIcon>
 
-              <Menu
-                onClose={() => setUserMenuOpened(false)}
-                onOpen={() => setUserMenuOpened(true)}
-              >
-                <Menu.Target>
-                  <UnstyledButton>
-                    <Avatar size={35} radius={'sm'} color="primary">
-                      {avatarInitials()}
-                    </Avatar>
-                  </UnstyledButton>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <Menu.Item>User Profile</Menu.Item>
-                  <Menu.Item>Settings</Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
-            </Box>
-          </Group>
+                <Menu
+                  onClose={() => setUserMenuOpened(false)}
+                  onOpen={() => setUserMenuOpened(true)}
+                >
+                  <Menu.Target>
+                    <UnstyledButton>
+                      <Avatar size={35} radius={'sm'} color="primary">
+                        {avatarInitials()}
+                      </Avatar>
+                    </UnstyledButton>
+                  </Menu.Target>
+                  <Menu.Dropdown>
+                    <Menu.Item>User Profile</Menu.Item>
+                    <Menu.Item>Settings</Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
+              </Box>
+            </Grid.Col>
+          </Grid>
         </Header>
       }
       styles={(theme) => ({
