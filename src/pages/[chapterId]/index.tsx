@@ -1,5 +1,7 @@
 import {
+  faFilePen,
   faLink,
+  faPenRuler,
   faSun,
   faTag,
   faTags,
@@ -18,6 +20,7 @@ import {
   Divider,
   Grid,
   ActionIcon,
+  Tooltip,
 } from '@mantine/core';
 import { AxiosResponse } from 'axios';
 import { clientApi } from 'lib/api';
@@ -97,15 +100,26 @@ const Chapter = () => {
                   alignItems: 'center',
                 }}
               >
-                <ActionIcon m="sm">
-                  <FontAwesomeIcon icon={faLink} />
-                </ActionIcon>
-                <ActionIcon m="sm">
-                  <FontAwesomeIcon icon={faTags} />
-                </ActionIcon>
-                <ActionIcon m="sm">
-                  <FontAwesomeIcon icon={faSun} />
-                </ActionIcon>
+                <Tooltip label="Links">
+                  <ActionIcon m="sm" radius="lg">
+                    <FontAwesomeIcon icon={faLink} />
+                  </ActionIcon>
+                </Tooltip>
+                <Tooltip label="Tags">
+                  <ActionIcon m="sm" radius="lg">
+                    <FontAwesomeIcon icon={faTags} />
+                  </ActionIcon>
+                </Tooltip>
+                <Tooltip label="Note">
+                  <ActionIcon m="sm" radius="lg">
+                    <FontAwesomeIcon icon={faFilePen} />
+                  </ActionIcon>
+                </Tooltip>
+                <Tooltip label="Go to Canvas">
+                  <ActionIcon m="sm" radius="lg">
+                    <FontAwesomeIcon icon={faPenRuler} />
+                  </ActionIcon>
+                </Tooltip>
               </Grid.Col>
               <Grid.Col span={11}>
                 <div
@@ -123,10 +137,6 @@ const Chapter = () => {
                     </Box>
                   );
                 })}
-                <Divider />
-                <Box>
-                  <Textarea label="Note" variant="filled" />
-                </Box>
               </Grid.Col>
             </Grid>
           </Paper>

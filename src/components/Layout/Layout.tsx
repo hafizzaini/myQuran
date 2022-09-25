@@ -18,6 +18,7 @@ import {
   Text,
   Grid,
   Button,
+  useMantineTheme,
 } from '@mantine/core';
 import Sidebar from '../Sidebar';
 import useStyles from './Layout.styles';
@@ -38,10 +39,12 @@ import {
   faBookBible,
   faBookQuran,
   faCircleInfo,
+  faGear,
   faMoon,
   faPaperPlane,
   faPenRuler,
   faSun,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
 config.autoAddCss = false; /* eslint-disable import/first */
@@ -54,6 +57,7 @@ export interface LayoutConfig {
 export const Layout = ({ children }) => {
   const showNavbarSelector = useAppSelector(selectShowNavbar);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const theme = useMantineTheme();
   const { classes } = useStyles();
   const [openedBurger, setOpenedBurger] = useState(false);
 
@@ -96,7 +100,7 @@ export const Layout = ({ children }) => {
       }
       navbarOffsetBreakpoint="sm"
       header={
-        <Header height={60} p="xs">
+        <Header height={50} p="xs">
           <Grid className={classes.header}>
             <Grid.Col span={10}>
               <Box sx={{ display: 'flex' }}>
@@ -145,28 +149,9 @@ export const Layout = ({ children }) => {
               </Box>
             </Grid.Col>
             <Grid.Col span={2} sx={{ display: 'flex', justifyContent: 'end' }}>
-              <Box sx={{ display: 'flex' }}>
-                <ActionIcon
-                  onClick={() => toggleColorScheme()}
-                  radius="sm"
-                  size={35}
-                  sx={(theme) => ({
-                    marginRight: '6px',
-                    backgroundColor:
-                      theme.colorScheme === 'dark'
-                        ? theme.colors.dark[6]
-                        : theme.colors.gray[0],
-                    color:
-                      theme.colorScheme === 'dark'
-                        ? theme.colors.yellow[4]
-                        : theme.colors.blue[6],
-                  })}
-                >
-                  {colorScheme === 'dark' ? (
-                    <FontAwesomeIcon icon={faSun} />
-                  ) : (
-                    <FontAwesomeIcon icon={faMoon} />
-                  )}
+              <Group spacing="sm" pr="md">
+                <ActionIcon radius="lg" onClick={() => toggleColorScheme()}>
+                  <FontAwesomeIcon icon={faGear} size="lg" />
                 </ActionIcon>
 
                 <Menu
@@ -174,18 +159,16 @@ export const Layout = ({ children }) => {
                   onOpen={() => setUserMenuOpened(true)}
                 >
                   <Menu.Target>
-                    <UnstyledButton>
-                      <Avatar size={35} radius={'sm'} color="primary">
-                        {avatarInitials()}
-                      </Avatar>
-                    </UnstyledButton>
+                    <ActionIcon radius="lg">
+                      <FontAwesomeIcon icon={faUser} size="lg" />
+                    </ActionIcon>
                   </Menu.Target>
                   <Menu.Dropdown>
                     <Menu.Item>User Profile</Menu.Item>
                     <Menu.Item>Settings</Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
-              </Box>
+              </Group>
             </Grid.Col>
           </Grid>
         </Header>
