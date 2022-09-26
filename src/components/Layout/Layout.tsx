@@ -46,6 +46,7 @@ import {
   faSun,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import HeaderBar from '../HeaderBar/HeaderBar';
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -63,20 +64,6 @@ export const Layout = ({ children }) => {
 
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [sidebarOpened, setSidebarOpened] = useState(true);
-
-  const avatarInitials = () => {
-    const split = ''.split(' ');
-
-    if (split.length !== 0) {
-      let text = '';
-
-      split.forEach((item) => {
-        text += item.charAt(0);
-      });
-
-      return text;
-    }
-  };
 
   if (showNavbarSelector === 'none') {
     return <>{children}</>;
@@ -99,80 +86,7 @@ export const Layout = ({ children }) => {
         </Transition>
       }
       navbarOffsetBreakpoint="sm"
-      header={
-        <Header height={50} p="xs">
-          <Grid className={classes.header}>
-            <Grid.Col span={10}>
-              <Box sx={{ display: 'flex' }}>
-                <Burger
-                  opened={sidebarOpened}
-                  onClick={() => setSidebarOpened((o) => !o)}
-                />
-                <Group spacing={50} ml={100}>
-                  <Link href="1">
-                    <Button
-                      leftIcon={<FontAwesomeIcon icon={faBookQuran} />}
-                      variant="subtle"
-                      color="gray"
-                    >
-                      Quran
-                    </Button>
-                  </Link>
-                  <Link href="/workspace">
-                    <Button
-                      leftIcon={<FontAwesomeIcon icon={faPenRuler} />}
-                      variant="subtle"
-                      color="gray"
-                    >
-                      Canvas
-                    </Button>
-                  </Link>
-                  <Link href="/feedback">
-                    <Button
-                      leftIcon={<FontAwesomeIcon icon={faPaperPlane} />}
-                      variant="subtle"
-                      color="gray"
-                    >
-                      Feedback
-                    </Button>
-                  </Link>
-                  <Link href="/help">
-                    <Button
-                      leftIcon={<FontAwesomeIcon icon={faCircleInfo} />}
-                      variant="subtle"
-                      color="gray"
-                    >
-                      Help
-                    </Button>
-                  </Link>
-                </Group>
-              </Box>
-            </Grid.Col>
-            <Grid.Col span={2} sx={{ display: 'flex', justifyContent: 'end' }}>
-              <Group spacing="sm" pr="md">
-                <ActionIcon radius="lg" onClick={() => toggleColorScheme()}>
-                  <FontAwesomeIcon icon={faGear} size="lg" />
-                </ActionIcon>
-
-                <Menu
-                  onClose={() => setUserMenuOpened(false)}
-                  onOpen={() => setUserMenuOpened(true)}
-                >
-                  <Menu.Target>
-                    <ActionIcon radius="lg">
-                      <FontAwesomeIcon icon={faUser} size="lg" />
-                    </ActionIcon>
-                  </Menu.Target>
-                  <Menu.Dropdown>
-                    <Menu.Item>User Profile</Menu.Item>
-                    <Menu.Item>Settings</Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-              </Group>
-            </Grid.Col>
-          </Grid>
-        </Header>
-      }
+      header={<HeaderBar />}
       styles={(theme) => ({
         main: {
           backgroundColor:

@@ -85,6 +85,9 @@ const MyApp = (props: AppProps) => {
             theme={{
               /** Put your mantine theme override here */
               colorScheme,
+              spacing: {
+                xxs: 5,
+              },
             }}
           >
             <NotificationsProvider limit={5} position="top-right">
