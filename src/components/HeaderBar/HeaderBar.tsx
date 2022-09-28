@@ -12,6 +12,7 @@ import {
   Text,
   Space,
   Checkbox,
+  Paper,
 } from '@mantine/core';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -128,6 +129,9 @@ const HeaderBar = () => {
           <Box>
             <Checkbox label="I agree to sell my privacy" p="xxs" />
             <Checkbox label="I agree to sell my privacy" p="xxs" />
+            <Paper shadow="xs" p="md" sx={{ backgroundColor: 'blue.3' }}>
+              Selected Translations
+            </Paper>
           </Box>
           <Space h="xs" />
           <Text size="xs" weight={700}>
