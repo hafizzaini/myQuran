@@ -8,11 +8,11 @@ import {
   Drawer,
   Grid,
   Button,
-  Divider,
   Text,
   Space,
   Checkbox,
   Paper,
+  useMantineTheme,
 } from '@mantine/core';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -38,6 +38,8 @@ const HeaderBar = () => {
   const [sidebarOpened, setSidebarOpened] = useState(true);
   const [settingDrawerOpened, setSettingDrawerOpened] = useState(false);
 
+  const theme = useMantineTheme();
+
   return (
     <Header height={50} p="xs">
       <Grid className={classes.header}>
@@ -55,6 +57,15 @@ const HeaderBar = () => {
                   color="gray"
                 >
                   Quran
+                </Button>
+              </Link>
+              <Link href="/workspace">
+                <Button
+                  leftIcon={<FontAwesomeIcon icon={faPenRuler} />}
+                  variant="subtle"
+                  color="gray"
+                >
+                  Translation
                 </Button>
               </Link>
               <Link href="/workspace">
@@ -117,27 +128,54 @@ const HeaderBar = () => {
         opened={settingDrawerOpened}
         onClose={() => setSettingDrawerOpened(false)}
         position="right"
-        title="Settings"
+        title={
+          <Text color="gray.6" weight={700}>
+            Settings
+          </Text>
+        }
         padding="sm"
       >
-        <Box>
-          <Text>Translation</Text>
+        <Text>Translation</Text>
+        <Paper m="xs">
           <Space h="xs" />
           <Text size="xs" weight={700}>
             By Verse
           </Text>
           <Box>
-            <Checkbox label="I agree to sell my privacy" p="xxs" />
-            <Checkbox label="I agree to sell my privacy" p="xxs" />
-            <Paper shadow="xs" p="md" sx={{ backgroundColor: 'blue.3' }}>
-              Selected Translations
+            <Checkbox label="Show verse note" p="xxs" />
+            <Checkbox label="Show tags and links" p="xxs" />
+            <Paper
+              shadow="xs"
+              mt="xxs"
+              p="xs"
+              sx={{ backgroundColor: theme.colors.gray[8] }}
+            >
+              <Text size="xs" color="gray.5">
+                Selected Translations
+              </Text>
+              <Text weight="bold">Muhammad Asad</Text>
             </Paper>
           </Box>
           <Space h="xs" />
           <Text size="xs" weight={700}>
             By Word
           </Text>
-        </Box>
+          <Box>
+            <Checkbox label="Show verse note" p="xxs" />
+            <Checkbox label="Show tags and links" p="xxs" />
+            <Paper
+              shadow="xs"
+              mt="xxs"
+              p="xs"
+              sx={{ backgroundColor: theme.colors.gray[8] }}
+            >
+              <Text size="xs" color="gray.5">
+                Selected Translations
+              </Text>
+              <Text weight="bold">Sahih International</Text>
+            </Paper>
+          </Box>
+        </Paper>
       </Drawer>
     </Header>
   );

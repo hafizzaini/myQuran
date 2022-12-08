@@ -100,6 +100,11 @@ const Chapter = () => {
                   alignItems: 'center',
                 }}
               >
+                <Tooltip label="Note">
+                  <ActionIcon m="sm" radius="lg">
+                    <FontAwesomeIcon icon={faFilePen} />
+                  </ActionIcon>
+                </Tooltip>
                 <Tooltip label="Links">
                   <ActionIcon m="sm" radius="lg">
                     <FontAwesomeIcon icon={faLink} />
@@ -110,11 +115,7 @@ const Chapter = () => {
                     <FontAwesomeIcon icon={faTags} />
                   </ActionIcon>
                 </Tooltip>
-                <Tooltip label="Note">
-                  <ActionIcon m="sm" radius="lg">
-                    <FontAwesomeIcon icon={faFilePen} />
-                  </ActionIcon>
-                </Tooltip>
+
                 <Tooltip label="Go to Canvas">
                   <ActionIcon m="sm" radius="lg">
                     <FontAwesomeIcon icon={faPenRuler} />
